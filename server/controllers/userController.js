@@ -76,7 +76,7 @@ export const userCreatePost = [
       if(err){
         res.status(400).json({ errors: err, user });
       }
-      res.status(200).json(user);
+      res.redirect(user.url);
     })
   }
 ];
