@@ -120,9 +120,6 @@ export const userUpdatePost = [
       _id: req.params.id
     });
 
-    if(!errors.isEmpty()){
-      res.status(400).json({ errors: errors.array(), user });
-    }
     if(req.body.password) {
       try {
         salt = await bcrypt.genSalt();
@@ -132,6 +129,12 @@ export const userUpdatePost = [
       } catch(err) {
         res.status(400).json({ errors: err });
       }
+    }
+    if(!errors.isEmpty()){
+      res.status(400).json({ errors: errors.array(), user });
+    }
+    if(userExists !== null){
+      res.status(400).json({ errors: 'Nome de usuário já utilizado', user });
     }
     User.findByIdAndUpdate(req.params.id, user, {}, (err, doc) => {
       if(err){
