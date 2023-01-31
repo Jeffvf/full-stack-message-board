@@ -5,7 +5,7 @@ export const userList = async(req, res) => {
   try {
     const user = await User.find({}, "username");
 
-    res.status(200).json();
+    res.status(200).json(user);
   } catch(err) {
     res.status(404).json({ message: err.message});
   }
