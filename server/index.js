@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 
 import userRoutes from "./routers/users.js";
+import messageRoutes from "./routers/message.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(helmet());
 app.use(morgan('common'));
 
 app.use('/users', userRoutes);
+app.use('/', messageRoutes);
 
 const PORT = process.env.PORT || 8000;
 
