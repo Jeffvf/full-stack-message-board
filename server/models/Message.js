@@ -11,7 +11,7 @@ const MessageSchema = new Schema({
 });
 
 MessageSchema.virtual('url').get(function() {
-  return `/users/${this.user}/message/${this._id}`;
+  return `/message/${this._id}`;
 })
 
 const Message = mongoose.model('Message', MessageSchema);
