@@ -2,6 +2,10 @@ import User from "../models/User.js";
 import Message from "../models/Message.js";
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const userList = async(req, res) => {
   try {
@@ -144,6 +148,21 @@ export const userUpdatePost = [
     });
   }
 ];
+
+export const userLogin = async(req, res) => {
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if(user === null ) res.status(400).json({ errors: 'Nome de usuário incorreto'});
+
+    const isMatch = await bcrypt.compare(req.body.password, user.password);
+    if(!isMatch) res.status(400).json({ errors: 'Senha incorreta'});
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    res.status(200).json({ token, user });
+  } catch(err) {
+    res.status(500).json({ errors: err.message });
+  }
+}
 
 export const userDeleteGet = async(req, res) => {
   res.status(404).json({ message: 'Não implementado' });
