@@ -13,7 +13,7 @@ export const userList = async(req, res) => {
 
     res.status(200).json(user);
   } catch(err) {
-    res.status(404).json({ message: err.message});
+    res.status(404).json({ errors: err.message});
   }
 }
 
@@ -24,7 +24,7 @@ export const userDetail = async(req, res) => {
 
     res.status(200).json({ user: user, messages: messages });
   } catch(err) {
-    res.status(404).json({ message: err.message });
+    res.status(404).json({ errors: err.message });
   }
 }
 
@@ -56,7 +56,7 @@ export const userCreatePost = [
       passwordHash = await bcrypt.hash(req.body.password, salt);
       userExists = await User.findOne({ username: req.body.username })
     } catch(err) {
-      res.status(400).json({ errors: err });
+      res.status(400).json({ errors: err.message });
     }
 
     const user = new User({
@@ -74,7 +74,7 @@ export const userCreatePost = [
     }
     user.save((err) => {
       if(err){
-        res.status(400).json({ errors: err, user });
+        res.status(400).json({ errors: err.message, user });
       }
       res.redirect(user.url);
     })
@@ -89,7 +89,7 @@ export const userUpdateGet = async(req, res) => {
     }
     res.status(200).json({ user: user });
   } catch(err) {
-    res.status(404).json({ message: err.message });
+    res.status(404).json({ errors: err.message });
   }
 }
 
@@ -130,7 +130,7 @@ export const userUpdatePost = [
         userExists = await User.findOne({ username: req.body.username })
         user['password'] = passwordHash 
       } catch(err) {
-        res.status(400).json({ errors: err });
+        res.status(400).json({ errors: err.message });
       }
     }
     if(!errors.isEmpty()){
@@ -141,7 +141,7 @@ export const userUpdatePost = [
     }
     User.findByIdAndUpdate(req.params.id, user, {}, (err, doc) => {
       if(err){
-        res.status(400).json({ message: err })
+        res.status(400).json({ errors: err })
       }
       res.redirect(doc.url)
     });
@@ -185,12 +185,12 @@ export const userDeletePost = [
 
       User.findByIdAndDelete(req.params.id, {}, (err, doc) => {
         if(err){
-          res.status(400).json({ errors: err });
+          res.status(400).json({ errors: err.message });
         }
         res.status(200).redirect('/');
       });
     } catch(err) {
-      res.status(400).json({ errors: err });
+      res.status(400).json({ errors: err.message });
     }
   }
 ]
