@@ -160,6 +160,34 @@ export const userLogin = async(req, res) => {
   }
 }
 
-export const userDeletePost = async(req, res) => {
-  res.status(404).json({ message: 'Não implementado' });
-}
+export const userDeletePost = [
+  body('password', 'Senha invalida')
+  .trim()
+  .isLength({ min: 8 })
+  .escape(),
+  body('confirmPassword', 'Campos de senha devem ser iguais')
+  .custom((value, { req }) => value === req.body.password),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      res.status(400).json({ errors: errors.array() });
+    }
+    try{
+      const user = await User.findById(req.params.id, 'password');
+      if(!user){
+        res.status(404).json({ errors: 'Usuário não encontrado' });
+      }
+      const isMatch = await bcrypt.compare(req.body.password, user.password);
+      if(!isMatch) res.status(400).json({ errors: 'Senha incorreta'});
+
+      User.findByIdAndDelete(req.params.id, {}, (err, doc) => {
+        if(err){
+          res.status(400).json({ errors: err });
+        }
+        res.status(200).redirect('/');
+      });
+    } catch(err) {
+      res.status(400).json({ errors: err });
+    }
+  }
+]
