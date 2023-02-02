@@ -84,6 +84,9 @@ export const userCreatePost = [
 export const userUpdateGet = async(req, res) => {
   try {
     const user = await User.findById(req.params.id, "-password");
+    if(!user){
+      res.status(404).json({ errors: 'Usuário não encontrado' });
+    }
     res.status(200).json({ user: user });
   } catch(err) {
     res.status(404).json({ message: err.message });
