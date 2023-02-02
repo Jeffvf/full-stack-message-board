@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyToken } from "../middleware/auth.js";
+import { verifyToken, verifyUser } from "../middleware/auth.js";
 import { 
   userCreatePost, userDeletePost,
   userDetail, userList,
@@ -15,11 +15,11 @@ router.post('/create', userCreatePost);
 router.post('/login', userLogin);
 
 // update user
-router.get('/:id/update', verifyToken, userUpdateGet);
-router.post('/:id/update', verifyToken, userUpdatePost);
+router.get('/:id/update', verifyToken, verifyUser, userUpdateGet);
+router.post('/:id/update', verifyToken, verifyUser, userUpdatePost);
 
 // delete user
-router.post('/:id/delete', verifyToken, userDeletePost);
+router.post('/:id/delete', verifyToken, verifyUser, userDeletePost);
 
 // all users
 router.get('/', userList);

@@ -6,18 +6,20 @@ export const verifyToken = async (req, res, next) => {
     if (!token) {
       return res.status(403).send("Access Denied");
     }
-
     if (token.startsWith("Bearer ")) {
       token = token.slice(7, token.length).trimLeft();
     }
-
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified;
-    if(req.user.id != req.params.id){
-      return res.status(403).send("Access Denied");
-    }
     next();
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+};
+
+export const verifyUser = (req, res, next) => {
+  if(req.user.id != req.params.id){
+    return res.status(403).send("Access Denied");
+  }
+  next();
 };
