@@ -4,8 +4,10 @@ import { body, validationResult } from "express-validator";
 
 export const recentMessages = async(req, res) => {
   try {
-    const messages = await 
-    Message.find()
+    let token = req.header("Authorization");
+    let projection = token ? 'title text user createdAt updatedAt' : '-user';
+    const messages = await
+    Message.find({}, projection)
     .sort({ updatedAt: -1, createdAt: -1 })
     .populate('user')
     .limit(10)
