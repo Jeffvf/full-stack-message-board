@@ -108,5 +108,10 @@ export const messageDeleteGet = async(req, res) => {
 }
 
 export const messageDeletePost = async(req, res) => {
-  res.status(404).json({ errors: 'Não implementado' });
+  try {
+    await Message.findByIdAndDelete(req.params.id)
+    res.status(200).redirect('/');
+  } catch (err) {
+    res.status(400).json({ errors: err.message });
+  }
 }
