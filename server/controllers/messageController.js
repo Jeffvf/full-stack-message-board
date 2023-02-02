@@ -66,12 +66,42 @@ export const messageCreatePost = [
 ]
 
 export const messageUpdateGet = async(req, res) => {
-  res.status(404).json({ errors: 'Não implementado' });
+  res.status(200).json({ message: req.message });
 }
 
-export const messageUpdatePost = async(req, res) => {
-  res.status(404).json({ errors: 'Não implementado' });
-}
+export const messageUpdatePost = [
+  body('title', 'Título não deve ser vazio')
+  .trim()
+  .isLength({ min: 1})
+  .escape(),
+  body('text', 'Texto da mensagem não deve ser vazio')
+  .trim()
+  .isLength({ min: 1})
+  .escape(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    const user = await User.findById(req.user.id);
+    if(!user){
+      res.status(400).json({ errors: 'Usuário inválido' });
+    }
+    const message = new Message({
+      title: req.body.title,
+      text: req.body.text,
+      user: req.user.id,
+      _id: req.params.id
+    });
+
+    if(!errors.isEmpty()){
+      res.status(400).json({ errors: errors.array(), message: message });
+    }
+    try{
+      await Message.findByIdAndUpdate(req.params.id, message);
+      res.status(200).redirect(message.url);
+    } catch(err){
+      res.status(400).json({ errors: err.message });
+    }
+  }
+]
 
 export const messageDeleteGet = async(req, res) => {
   res.status(404).json({ errors: 'Não implementado' });
