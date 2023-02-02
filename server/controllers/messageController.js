@@ -12,7 +12,7 @@ export const recentMessages = async(req, res) => {
 
     res.status(200).json(messages);
   } catch(err) {
-    res.status(404).json({ message: err.message });
+    res.status(404).json({ errors: err.message });
   }
 }
 
@@ -24,12 +24,12 @@ export const messageDetails = async(req, res) => {
 
     res.status(200).json(message);
   } catch(err) {
-    res.status(404).json({ message: err.message });
+    res.status(404).json({ errors: err.message });
   }
 }
 
 export const messageCreateGet = async(req, res) => {
-  res.status(404).json({ message: 'Não implementado' });
+  res.status(404).json({ errors: 'Não implementado' });
 }
 
 export const messageCreatePost = [
@@ -66,17 +66,17 @@ export const messageCreatePost = [
 ]
 
 export const messageUpdateGet = async(req, res) => {
-  res.status(404).json({ message: 'Não implementado' });
+  res.status(404).json({ errors: 'Não implementado' });
 }
 
 export const messageUpdatePost = async(req, res) => {
-  res.status(404).json({ message: 'Não implementado' });
+  res.status(404).json({ errors: 'Não implementado' });
 }
 
 export const messageDeleteGet = async(req, res) => {
-  res.status(404).json({ message: 'Não implementado' });
+  res.status(404).json({ errors: 'Não implementado' });
 }
 
 export const messageDeletePost = async(req, res) => {
-  res.status(404).json({ message: 'Não implementado' });
+  res.status(404).json({ errors: 'Não implementado' });
 }
