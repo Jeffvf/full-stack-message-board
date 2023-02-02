@@ -28,10 +28,6 @@ export const userDetail = async(req, res) => {
   }
 }
 
-export const userCreateGet = async(req, res) => {
-  res.status(404).json({ message: 'Não implementado' });
-}
-
 export const userCreatePost = [
   body('firstName', 'Campo nome não deve ser vazio')
   .trim()
@@ -162,10 +158,6 @@ export const userLogin = async(req, res) => {
   } catch(err) {
     res.status(500).json({ errors: err.message });
   }
-}
-
-export const userDeleteGet = async(req, res) => {
-  res.status(404).json({ message: 'Não implementado' });
 }
 
 export const userDeletePost = async(req, res) => {
