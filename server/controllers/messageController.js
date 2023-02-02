@@ -1,4 +1,6 @@
 import Message from "../models/Message.js";
+import User from "../models/User.js";
+import { body, validationResult } from "express-validator"; 
 
 export const recentMessages = async(req, res) => {
   try {
@@ -30,9 +32,38 @@ export const messageCreateGet = async(req, res) => {
   res.status(404).json({ message: 'Não implementado' });
 }
 
-export const messageCreatePost = async(req, res) => {
-  res.status(404).json({ message: 'Não implementado' });
-}
+export const messageCreatePost = [
+  body('title', 'Título não deve ser vazio')
+  .trim()
+  .isLength({ min: 1})
+  .escape(),
+  body('text', 'Texto da mensagem não deve ser vazio')
+  .trim()
+  .isLength({ min: 1})
+  .escape(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    const user = await User.findById(req.user.id);
+    if(!user){
+      res.status(400).json({ errors: 'Usuário inválido' });
+    }
+    const message = new Message({
+      title: req.body.title,
+      text: req.body.text,
+      user: req.user.id
+    });
+
+    if(!errors.isEmpty()){
+      res.status(400).json({ errors: errors.array(), message: message });
+    }
+    message.save((err) => {
+      if(err){
+        res.status(400).json({ errors: err});
+      }
+      res.status(200).redirect(message.url);
+    });
+  }
+]
 
 export const messageUpdateGet = async(req, res) => {
   res.status(404).json({ message: 'Não implementado' });
