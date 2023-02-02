@@ -28,10 +28,6 @@ export const messageDetails = async(req, res) => {
   }
 }
 
-export const messageCreateGet = async(req, res) => {
-  res.status(404).json({ errors: 'Não implementado' });
-}
-
 export const messageCreatePost = [
   body('title', 'Título não deve ser vazio')
   .trim()
@@ -102,10 +98,6 @@ export const messageUpdatePost = [
     }
   }
 ]
-
-export const messageDeleteGet = async(req, res) => {
-  res.status(404).json({ errors: 'Não implementado' });
-}
 
 export const messageDeletePost = async(req, res) => {
   try {
