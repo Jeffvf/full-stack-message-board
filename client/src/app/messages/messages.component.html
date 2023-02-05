@@ -1,0 +1,8 @@
+<div *ngIf="messages.length" id="message-list">
+  <div *ngFor="let message of messages" class="message-box">
+    <span class="message-user" *ngIf="message.user">{{ message.user }} disse:</span>
+    <h3>{{ message.title }}</h3>
+    <p>{{ message.text }}</p>
+    <p class="message-date">{{ message.updatedAt | date }}</p>
+  </div>
+</div>
