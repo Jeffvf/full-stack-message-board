@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
-import { AuthUser, UserCredentials } from '../user';
-import { TokenStorageService } from '../token-storage.service';
+import { AuthUser, UserCredentials } from 'src/app/models/user';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { UserService } from 'src/app/user.service';
+
+
+
 
 @Component({
   selector: 'app-login',
@@ -12,6 +15,8 @@ import { TokenStorageService } from '../token-storage.service';
 })
 export class LoginComponent implements OnInit {
   errors: string = '';
+
+  
   loginSection = new FormGroup({
     username: new FormControl(''),
     password: new FormControl('')
