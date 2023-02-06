@@ -7,3 +7,14 @@ export interface User {
   member: boolean
   version: number,
 }
+
+export interface UserCredentials {
+  username: string,
+  password: string
+}
+
+export interface AuthUser {
+  token: string,
+  user: User,
+  errors?: string
+}
