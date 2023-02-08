@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthUser, UserCredentials } from 'src/app/models/user';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UserService } from 'src/app/user.service';
+import { UserService } from 'src/app/services/user.service';
 import { PrimeNGConfig } from 'primeng/api';
 
 
