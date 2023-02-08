@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthUser, UserCredentials } from 'src/app/models/user';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/user.service';
-
+import { PrimeNGConfig } from 'primeng/api';
 
 
 
@@ -25,10 +25,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private tokenStorage: TokenStorageService,
-    private router: Router
+    private router: Router,
+    private primengConfig: PrimeNGConfig
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.primengConfig.ripple = true;
+  }
 
   loginRequest(): void {
     const { username, password} = this.loginSection.value;
