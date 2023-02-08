@@ -1,10 +1,10 @@
-<div *ngIf="messages.length" id="message-list">
-  <div *ngFor="let message of messages">
-    <a routerLink="/details/{{message._id}}" class="message-box">
-      <span class="message-user" *ngIf="message.user">{{ message.user }} disse:</span>
-      <h3>{{ message.title }}</h3>
+<div *ngIf="messages.length" class="flex flex-column gap-4 mt-5 align-items-center">
+  <p-fieldset *ngFor="let message of messages" class="w-5">
+    <ng-template pTemplate="header">{{ message.title }}</ng-template>
       <p>{{ message.text }}</p>
-      <p class="message-date">{{ message.updatedAt | date }}</p>
-    </a>
-  </div>
+      <p class="text-right text-xs">
+        <span *ngIf="message.user">{{ message.user }} - </span>
+        <span>{{ message.updatedAt | date }}</span>
+      </p>
+  </p-fieldset>
 </div>

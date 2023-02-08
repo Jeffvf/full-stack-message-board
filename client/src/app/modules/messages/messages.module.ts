@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MessagesRoutingModule } from './messages-router.module';
 import { MessagesComponent } from './messages.component';
+import {FieldsetModule} from 'primeng/fieldset';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { MessagesComponent } from './messages.component';
   ],
   imports: [
     CommonModule,
-    MessagesRoutingModule
+    MessagesRoutingModule,
+    FieldsetModule,
   ]
 })
 export class MessagesModule { }  
