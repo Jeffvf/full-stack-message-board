@@ -16,3 +16,11 @@ export interface AuthUser {
   user: User,
   errors?: string
 }
+
+export interface UserRegister {
+  firstName: string,
+  lastName: string,
+  username: string,
+  password: string,
+  confirmPassword: string,
+}
