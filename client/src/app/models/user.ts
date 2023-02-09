@@ -4,8 +4,6 @@ export interface User {
   lastName: string,
   username: string,
   password: string,
-  member: boolean
-  version: number,
 }
 
 export interface UserCredentials {
