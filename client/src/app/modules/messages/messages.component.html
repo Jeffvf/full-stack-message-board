@@ -1,4 +1,4 @@
-<div *ngIf="messages.length" class="flex flex-column gap-4 mt-5 align-items-center">
+<div *ngIf="messages.length" class="flex flex-column gap-4 mt-5 align-items-center p-4">
   <p-fieldset *ngFor="let message of messages" class="w-5">
     <ng-template pTemplate="header">{{ message.title }}</ng-template>
       <p>{{ message.text }}</p>
