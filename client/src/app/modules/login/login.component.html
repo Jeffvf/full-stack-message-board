@@ -9,9 +9,17 @@
     <form [formGroup]="loginSection" (ngSubmit)="loginRequest()">
         <label for="email" class="block text-900 font-medium mb-2">Email</label>
         <input id="email" type="email" placeholder="Email" pInputText class="w-full mb-3" formControlName="username" required>
+        <div *ngIf="username!.invalid && (username!.dirty || username!.touched)" class="mb-3">
+          <p-message *ngIf="username!.errors?.['required']" severity="error" text="Preencha o campo Email"></p-message>
+          <p-message *ngIf="username!.errors?.['email']" severity="error" text="Formato de email inválido"></p-message>
+        </div>
   
         <label for="password" class="block text-900 font-medium mb-2">Senha</label>
         <input id="password" type="password" placeholder="Senha" pInputText class="w-full mb-3" formControlName="password" required>
+        <div *ngIf="password!.invalid && (password!.dirty || password!.touched)" class="mb-3">
+          <p-message *ngIf="password!.errors?.['required']" severity="error" text="Preencha o campo senha"></p-message>
+          <p-message *ngIf="password!.errors?.['minlength']" severity="error" text="A senha deve conter pelo menos 8 caracteres"></p-message>
+        </div>
   
         <button pButton pRipple label="Entrar" icon="pi pi-user" class="w-full"></button>
         <div class="mt-3">

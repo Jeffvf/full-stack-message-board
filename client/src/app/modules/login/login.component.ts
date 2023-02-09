@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthUser, UserCredentials } from 'src/app/models/user';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
 
   
   loginSection = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
+    username: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required])
   })
 
   constructor(
@@ -33,6 +33,10 @@ export class LoginComponent implements OnInit {
     this.primengConfig.ripple = true;
   }
 
+  get username() { return this.loginSection.get('username') }
+
+  get password() { return this.loginSection.get('password') }
+  
   loginRequest(): void {
     const { username, password} = this.loginSection.value;
     const user: UserCredentials = {
