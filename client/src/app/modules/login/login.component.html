@@ -3,7 +3,7 @@
     <div class="text-center mb-5">
         <div class="text-900 text-3xl font-medium mb-3">Bem vindo!</div>
         <span class="text-600 font-medium line-height-3">Não possui uma conta?</span>
-        <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Crie aqui!</a>
+        <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" routerLink="register">Crie aqui!</a>
     </div>
   
     <form [formGroup]="loginSection" (ngSubmit)="loginRequest()">
