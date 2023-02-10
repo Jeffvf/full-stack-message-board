@@ -1,3 +1,5 @@
+import { Message } from "./message"
+
 export interface User {
   _id: string,
   firstName: string,
@@ -24,4 +26,9 @@ export interface UserRegister {
   password: string,
   confirmPassword: string,
   errors?: string
+}
+
+export interface UserDetail {
+  user: User,
+  messages: Message[]
 }
