@@ -5,6 +5,10 @@
     </a>
   </ng-template>
   <ng-template pTemplate="end">
-    <button pButton label="Entrar" icon="pi pi-sign-in" (click)="loginRedirect()"></button>
+    <button *ngIf="!user" pButton label="Entrar" icon="pi pi-sign-in" (click)="loginRedirect()"></button>
+    <div *ngIf="user" class="flex gap-4 align-items-center">
+      <a class="cursor-pointer text-primary">{{ user.firstName }} {{ user.lastName }}</a>
+      <button pButton label="Sair" icon="pi pi-sign-out" (click)="signOut()"></button>
+    </div>
   </ng-template>
 </p-menubar>
