@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { User, UserCredentials, AuthUser, UserRegister } from '../models/user';
+import { UserCredentials, AuthUser, UserRegister, UserDetail } from '../models/user';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { catchError } from 'rxjs';
 
 @Injectable({
@@ -33,6 +33,16 @@ export class UserService {
             errors: err.error.errors
           } as unknown as UserRegister)
         )
+      )
+  }
+
+  getUser(id: string): Observable<UserDetail>{
+    return this.http.get<UserDetail>(`${this.userUrl}/${id}`)
+      .pipe(
+        tap(user => console.log(user.messages)),
+        catchError(err => of({
+          errors: err.errors.errors
+        } as unknown as UserDetail))
       )
   }
 }
