@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { User, UserDetail } from "src/app/models/user";
 import { UserService } from "src/app/services/user.service";
 
@@ -13,7 +13,11 @@ export class UserDetailsComponent implements OnInit{
 
   userDetail!: UserDetail;
 
-  constructor(private route: ActivatedRoute, private userService: UserService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getUser()
@@ -29,4 +33,8 @@ export class UserDetailsComponent implements OnInit{
   get user() { return this.userDetail.user }
 
   get messages() { return this.userDetail.messages }
+
+  updateRedirect(){
+    this.router.navigate(['update'], { relativeTo: this.route });
+  }
 }
