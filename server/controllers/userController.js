@@ -136,7 +136,8 @@ export const userUpdatePost = [
     if(!errors.isEmpty()){
       res.status(400).json({ errors: errors.array(), user });
     }
-    if(userExists !== null){
+    const userId = JSON.stringify(user._id)
+    if(userExists !== null && JSON.stringify(userExists._id) !== userId){
       res.status(400).json({ errors: 'Nome de usuário já utilizado', user });
     }
     User.findByIdAndUpdate(req.params.id, user, {}, (err, doc) => {
