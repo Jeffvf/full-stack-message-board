@@ -184,12 +184,9 @@ export const userDeletePost = [
       const isMatch = await bcrypt.compare(req.body.password, user.password);
       if(!isMatch) res.status(400).json({ errors: 'Senha incorreta'});
 
-      User.findByIdAndDelete(req.params.id, {}, (err, doc) => {
-        if(err){
-          res.status(400).json({ errors: err.message });
-        }
-        res.status(200).redirect('/');
-      });
+      await Message.deleteMany({ user: req.params.id });
+      await User.findByIdAndDelete(req.params.id);
+      res.status(200).redirect('/')
     } catch(err) {
       res.status(400).json({ errors: err.message });
     }
