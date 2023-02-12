@@ -144,7 +144,7 @@ export const userUpdatePost = [
       if(err){
         res.status(400).json({ errors: err })
       }
-      res.redirect(doc.url)
+      res.status(200).json(user)
     });
   }
 ];
