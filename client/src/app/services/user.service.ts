@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UserCredentials, AuthUser, UserRegister, UserDetail } from '../models/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
 import { catchError } from 'rxjs';
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,15 @@ export class UserService {
   
   private userUrl = "http://localhost:8000/users"
 
-  constructor(private http: HttpClient) { }
+  token = this.tokenStorageService.getToken() 
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${this.token}`
+  })
+
+  constructor(
+    private http: HttpClient,
+    private tokenStorageService: TokenStorageService) { }
 
   login(user: UserCredentials): Observable<AuthUser>{
     return this.http.post<AuthUser>(`${this.userUrl}/login`, user)
@@ -33,6 +42,17 @@ export class UserService {
             errors: err.error.errors
           } as unknown as UserRegister)
         )
+      )
+  }
+
+  update(user: UserRegister,  id: string): Observable<UserRegister>{
+    return this.http.post<UserRegister>(`${this.userUrl}/${id}/update`, user, { headers: this.headers })
+      .pipe(
+        catchError(err => of({
+          user: user,
+          errors: err.error.errors
+        } as unknown as UserRegister)
+        ),
       )
   }
 
