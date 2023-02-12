@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { User } from "src/app/models/user";
+import { User, UserRegister } from "src/app/models/user";
 import { passwordMatch } from "src/app/shared/custom-validators";
 
 @Component({
@@ -10,7 +10,13 @@ import { passwordMatch } from "src/app/shared/custom-validators";
 
 export class UserFormsComponent implements OnInit{
   @Input('user') user?: User;
-  @Input('submitMethod') submitMethod!: () => void;
+  @Input('errors') errors?: string;
+
+  @Output('submitMethod') newUserEvent = new EventEmitter<UserRegister>()
+
+  submitMethod(){
+    this.newUserEvent.emit(this.registerForm.value);
+  }
   
   registerForm! : FormGroup;
 
