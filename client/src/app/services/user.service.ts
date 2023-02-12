@@ -56,6 +56,20 @@ export class UserService {
       )
   }
 
+  delete(id: string, password: string, confirmPassword: string): any {
+    const params = {
+      password,
+      confirmPassword
+    }
+    return this.http.post<any>(`${this.userUrl}/${id}/delete`, params, { headers: this.headers })
+      .pipe(
+        catchError(err => of({
+          errors: err.error.errors
+        } as unknown as any)
+        ),
+      )
+  }
+
   getUser(id: string): Observable<UserDetail>{
     return this.http.get<UserDetail>(`${this.userUrl}/${id}`)
       .pipe(
