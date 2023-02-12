@@ -14,13 +14,15 @@ import { UserRoutingModule } from './user-routing.module';
 import { UserDetailsComponent } from './user-details.component';
 import { UserFormsComponent } from './user-forms.component';
 import { UserUpdateComponent } from './user-update.component';
+import { UserDeleteComponent } from './user-delete.component';
 
 
 @NgModule({
   declarations: [
     UserDetailsComponent,
     UserUpdateComponent,
-    UserFormsComponent
+    UserFormsComponent,
+    UserDeleteComponent,
   ],
   imports: [
     CommonModule,
