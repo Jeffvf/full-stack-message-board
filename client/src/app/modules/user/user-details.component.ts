@@ -37,4 +37,8 @@ export class UserDetailsComponent implements OnInit{
   updateRedirect(){
     this.router.navigate(['update'], { relativeTo: this.route });
   }
+
+  deleteRedirect(){
+    this.router.navigate(['delete'], { relativeTo: this.route })
+  }
 }
