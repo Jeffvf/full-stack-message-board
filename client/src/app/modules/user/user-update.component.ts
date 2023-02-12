@@ -32,6 +32,7 @@ export class UserUpdateComponent implements OnInit{
           this.errors = modifiedUser.errors;
         }
         else{
+          this.tokenStorageService.saveUser(modifiedUser)
           this.router.navigate([`users/user/${id}`])
         }
       })
