@@ -7,9 +7,9 @@
       <p-message *ngIf="title!.errors?.['required']" severity="error" text="Preencha o campo título"></p-message>
     </div>
     <label for="message" class="block text-900 font-medium mb-2">Mensagem</label>
-    <textarea id="message" rows="5" cols="40" maxlength="300" [autoResize]="true" pInputTextarea value={{message?.text}} formControlName="messageText"></textarea>
-    <div *ngIf="messageText!.invalid && (messageText!.touched || messageText!.dirty)" class="mb-3">
-      <p-message *ngIf="messageText!.errors?.['required']" severity="error" text="Preencha o campo mensagem"></p-message>
+    <textarea id="message" rows="5" cols="40" maxlength="300" [autoResize]="true" pInputTextarea value={{message?.text}} formControlName="text"></textarea>
+    <div *ngIf="text!.invalid && (text!.touched || text!.dirty)" class="mb-3">
+      <p-message *ngIf="text!.errors?.['required']" severity="error" text="Preencha o campo mensagem"></p-message>
     </div>
     <div class="flex gap-2 mt-2">
       <button pButton pRipple type="submit" label="Salvar" icon="pi pi-check" class="p-button-outlined"></button>

@@ -22,7 +22,7 @@ export class MessageFormComponent implements OnInit{
   ngOnInit() {
     this.messageForm = this.formBuilder.group({
       title: [this.message?.title, [Validators.required]],
-      messageText: [this.message?.text, [Validators.required]]
+      text: [this.message?.text, [Validators.required]]
     });
   }
 
@@ -35,5 +35,5 @@ export class MessageFormComponent implements OnInit{
   }
 
   get title() { return this.messageForm.get('title'); }
-  get messageText() { return this.messageForm.get('messageText'); }
+  get text() { return this.messageForm.get('text'); }
 }
