@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ServerError } from 'src/app/models/error';
 import { Message, MessageRegister } from 'src/app/models/message';
 import { MessageService } from 'src/app/services/message.service';
 
@@ -10,6 +11,7 @@ import { MessageService } from 'src/app/services/message.service';
 export class MessagesComponent {
   messages: Message[] = [];
   displayModal = false;
+  errors?: ServerError[];
 
   constructor(
     private messageService: MessageService) {}
@@ -28,10 +30,9 @@ export class MessagesComponent {
   }
 
   addMessage(message: MessageRegister){
-    console.log(message)
     this.messageService.addMessage(message).subscribe(message => {
       if(message.errors){
-        console.log(message.errors);
+        this.errors = message.errors;
       }
       else{
         window.location.reload();

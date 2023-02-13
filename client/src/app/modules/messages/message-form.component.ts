@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ServerError } from "src/app/models/error";
 import { Message, MessageRegister } from "src/app/models/message";
 
 @Component({
@@ -11,6 +12,7 @@ export class MessageFormComponent implements OnInit{
   @Input('title') formTitle!: string
   @Input('displayModal') displayModal!: boolean;
   @Input('message') message?: Message; 
+  @Input('errors') errors?: ServerError[];
 
   @Output('modalDisplay') hideModalEvent = new EventEmitter<boolean>();
   @Output('submitMethod') submitMethodEvent = new EventEmitter<MessageRegister>();

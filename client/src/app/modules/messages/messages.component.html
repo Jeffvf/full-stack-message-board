@@ -10,4 +10,5 @@
       </p>
   </p-fieldset>
 </div>
-<app-message-form [displayModal]="displayModal" (submitMethod)="addMessage($event)" (modalDisplay)="modalDisplay($event)" title="Nova Mensagem"></app-message-form>
+<app-message-form [displayModal]="displayModal" [errors]="errors" (submitMethod)="addMessage($event)"
+ (modalDisplay)="modalDisplay($event)" title="Nova Mensagem"></app-message-form>

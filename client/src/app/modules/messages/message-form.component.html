@@ -16,5 +16,8 @@
       <button pButton pRipple type="button" label="Cancelar" icon="pi pi-times"
         class="p-button-outlined p-button-danger" (click)="hideModal(false)"></button>
     </div>
+    <div class="mt-3" *ngFor="let error of errors">
+      <p-message severity="error" text={{error.msg}}></p-message>
+    </div>
   </form>
 </p-dialog>
