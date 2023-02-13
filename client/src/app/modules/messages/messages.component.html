@@ -1,4 +1,6 @@
-<div *ngIf="messages.length" class="flex flex-column gap-4 mt-5 align-items-center p-4">
+<div class="flex flex-column gap-4 mt-5 align-items-center p-4">
+  <button pButton pRipple type="button" label="Adicionar mensagem" icon="pi pi-plus" class="p-button-raised" (click)="displayModal = !displayModal"></button>
+  <span class="text-2xl font-bold">Mensagens recentes:</span>
   <p-fieldset *ngFor="let message of messages" class="w-5">
     <ng-template pTemplate="header">{{ message.title }}</ng-template>
       <p>{{ message.text }}</p>
@@ -8,3 +10,4 @@
       </p>
   </p-fieldset>
 </div>
+<app-message-form [displayModal]="displayModal" (submitMethod)="addMessage($event)" (modalDisplay)="modalDisplay($event)" title="Nova Mensagem"></app-message-form>

@@ -1,25 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Message } from '../models/message';
+import { catchError, Observable, of } from 'rxjs';
+import { Message, MessageRegister } from '../models/message';
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
-  private messageUrl = "http://localhost:8000";
+  private baseMessageUrl = "http://localhost:8000";
+  private messageUrl = "http://localhost:8000/message";
 
-  httpOptions = {
-    headers: new HttpHeaders({ 
-      'Content-Type': 'application/json',
-    })
-  };
+  token = this.tokenStorageService.getToken() 
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${this.token}`
+  })
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private tokenStorageService: TokenStorageService,
   ) { }
 
   getMessages(): Observable<Message[]> {
-    return this.http.get<Message[]>(this.messageUrl)
+    return this.http.get<Message[]>(this.baseMessageUrl)
+  }
+
+  addMessage(message: MessageRegister){
+    return this.http.post<MessageRegister>(`${this.messageUrl}/create`, message, { headers: this.headers })
+      .pipe(
+        catchError(err => of({
+          errors: err.error.errors,
+          message: message
+        })
+        )
+      )
   }
 }

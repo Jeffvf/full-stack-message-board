@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Message } from 'src/app/models/message';
+import { Message, MessageRegister } from 'src/app/models/message';
 import { MessageService } from 'src/app/services/message.service';
 
 @Component({
@@ -9,8 +9,10 @@ import { MessageService } from 'src/app/services/message.service';
 })
 export class MessagesComponent {
   messages: Message[] = [];
+  displayModal = false;
 
-  constructor(private messageService: MessageService) {}
+  constructor(
+    private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.getMessages();
@@ -19,5 +21,21 @@ export class MessagesComponent {
   getMessages(): void {
     this.messageService.getMessages()
       .subscribe(messages => this.messages = messages);
+  }
+
+  modalDisplay(display: boolean){
+    this.displayModal = display;
+  }
+
+  addMessage(message: MessageRegister){
+    console.log(message)
+    this.messageService.addMessage(message).subscribe(message => {
+      if(message.errors){
+        console.log(message.errors);
+      }
+      else{
+        window.location.reload();
+      }
+    })
   }
 }
