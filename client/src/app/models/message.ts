@@ -9,3 +9,9 @@ export interface Message {
   updatedAt: Date,
   version: number
 }
+
+export interface MessageRegister{
+  title: string,
+  text: string,
+  errors?: string
+}
