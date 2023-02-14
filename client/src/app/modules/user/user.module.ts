@@ -35,6 +35,9 @@ import { UserDeleteComponent } from './user-delete.component';
     MessageModule,
     MessagesModule,
     InputTextModule,
+  ],
+  exports: [
+    UserFormsComponent,
   ]
 })
 export class UserModule { }

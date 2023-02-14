@@ -9,13 +9,14 @@ import { ButtonModule } from 'primeng/button';
 import { MessagesModule } from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { RegisterComponent } from './register.component';
+import { UserModule } from '../user/user.module';
 
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   bootstrap: [
     LoginComponent,
@@ -30,6 +31,7 @@ import { RegisterComponent } from './register.component';
     ButtonModule,
     MessageModule,
     MessagesModule,
+    UserModule,
   ]
 })
 export class LoginModule { }  

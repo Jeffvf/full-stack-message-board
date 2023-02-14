@@ -4,50 +4,6 @@
       <div class="text-900 text-3xl font-medium mb-3">Crie sua conta!</div>
       <span class="text-600 font-medium line-height-3">Preencha os campos abaixo com seus dados</span>
     </div>
-    <form [formGroup]="registerForm" (ngSubmit)="registerRequest()">
-      <label for="firstName" class="block text-900 font-medium mb-2">Nome</label>
-      <input id="firstName" type="text" placeholder="Nome" pInputText class="w-full mb-3" formControlName="firstName">
-      <div *ngIf="firstName!.invalid && (firstName!.dirty || firstName!.touched)" class="mb-3">
-        <p-message *ngIf="firstName!.errors?.['required']" severity="error" text="Preencha o campo Nome"></p-message>
-      </div>
-  
-      <label for="lastName" class="block text-900 font-medium mb-2">Sobrenome</label>
-      <input id="lastName" type="text" placeholder="Sobrenome" pInputText class="w-full mb-3" formControlName="lastName">
-      <div *ngIf="lastName!.invalid && (lastName!.dirty || lastName!.touched)" class="mb-3">
-        <p-message *ngIf="lastName!.errors?.['required']" severity="error" text="Preencha o campo Sobrenome"></p-message>
-      </div>
-  
-      <label for="email" class="block text-900 font-medium mb-2">Email</label>
-      <input id="email" type="email" placeholder="Email" pInputText class="w-full mb-3" formControlName="username">
-      <div *ngIf="username!.invalid && (username!.dirty || username!.touched)" class="mb-3">
-        <p-message *ngIf="username!.errors?.['required']" severity="error" text="Preencha o campo Email"></p-message>
-        <p-message *ngIf="username!.errors?.['email']" severity="error" text="Formato de email inválido"></p-message>
-      </div>
-  
-      <label for="password" class="block text-900 font-medium mb-2">Senha</label>
-      <input id="password" type="password" placeholder="Senha" pInputText class="w-full mb-3" formControlName="password">
-      <div *ngIf="password!.invalid && (password!.dirty || password!.touched)" class="mb-3">
-        <p-message *ngIf="password!.errors?.['required']" severity="error" text="Preencha o campo senha"></p-message>
-        <p-message *ngIf="password!.errors?.['minlength']" severity="error" text="A senha deve conter pelo menos 8 caracteres"></p-message>
-      </div>
-  
-      <label for="confirmPassword" class="block text-900 font-medium mb-2">Confirme a senha</label>
-      <input id="confirmPassword" type="password" placeholder="Confirmar senha" pInputText class="w-full mb-3" formControlName="confirmPassword">
-      <div *ngIf="confirmPassword!.invalid && (confirmPassword!.dirty || confirmPassword!.touched)" class="mb-3">
-        <p-message *ngIf="confirmPassword!.errors?.['required']" severity="error" text="Confirme a senha"></p-message>
-        <p-message *ngIf="confirmPassword!.errors?.['noMatch']" severity="error" text="Campos de senha devem ser iguais"></p-message>
-      </div>
-
-      <div *ngIf="registerForm.errors?.['noMatch'] && 
-        (registerForm!.dirty || registerForm!.touched) &&
-        (confirmPassword!.dirty || confirmPassword!.touched)" class="mb-3">
-        <p-message severity="error" text="Campos de senha devem ser iguais"></p-message>
-      </div>
-  
-      <button pButton pRipple label="Registrar" icon="pi pi-user" class="w-full"></button>
-      <div class="mt-3">
-        <p-message *ngIf="errors" severity="error" text={{errors}}></p-message>
-      </div>
-    </form>
+    <app-user-forms [errors]="errors" (submitMethod)="registerRequest($event)"></app-user-forms>
   </div>
 </div>

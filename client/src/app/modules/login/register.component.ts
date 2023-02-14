@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit{
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router) {}
-
+  
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -42,9 +42,7 @@ export class RegisterComponent implements OnInit{
 
   get confirmPassword() { return this.registerForm.get('confirmPassword'); }
 
-  registerRequest(): void {
-    const user: UserRegister = this.registerForm.value;
-
+  registerRequest(user: UserRegister): void {
     this.userService.register(user)
       .subscribe(newUser => {
         if(newUser.errors){
