@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
-import {MessageModule} from 'primeng/message';
+import { MessagesModule as MyMessagesModule } from '../messages/messages.module';
 
 
 import { UserRoutingModule } from './user-routing.module';
@@ -15,6 +15,7 @@ import { UserDetailsComponent } from './user-details.component';
 import { UserFormsComponent } from './user-forms.component';
 import { UserUpdateComponent } from './user-update.component';
 import { UserDeleteComponent } from './user-delete.component';
+import { MessageModule } from 'primeng/message';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { UserDeleteComponent } from './user-delete.component';
     MessageModule,
     MessagesModule,
     InputTextModule,
+    MyMessagesModule
   ],
   exports: [
     UserFormsComponent,
