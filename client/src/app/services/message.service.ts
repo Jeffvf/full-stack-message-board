@@ -36,4 +36,14 @@ export class MessageService {
         )
       )
   }
+
+  updateMessage(message: MessageRegister, id: string){
+    return this.http.post<MessageRegister>(`${this.messageUrl}/${id}/update`, message, { headers: this.headers })
+      .pipe(
+        catchError(err => of({
+          errors: err.error.errors,
+          message: message
+        }))
+      )
+  }
 }

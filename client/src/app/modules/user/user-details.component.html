@@ -12,14 +12,22 @@
     </div>
   </div>
   <div class="flex align-items-end p-4">
-    <div class="flex flex-column align-items-center gap-4">
-      <p-fieldset *ngFor="let message of messages" class="w-5">
-        <ng-template pTemplate="header">{{ message.title }}</ng-template>
-          <p>{{ message.text }}</p>
-          <p class="text-right text-xs">
-            <span>{{ message.updatedAt | date: 'short' }}</span>
-          </p>
-      </p-fieldset>
+    <div class="flex flex-column align-items-center justify-content-center gap-4 w-full">
+      <div *ngFor="let message of messages" class="w-5 flex">
+        <p-fieldset class="w-full">
+          <ng-template pTemplate="header">{{ message.title }}</ng-template>
+            <p>{{ message.text }}</p>
+            <p class="text-right text-xs">
+              <span>{{ message.updatedAt | date: 'short' }}</span>
+            </p>
+        </p-fieldset>
+        <div class="flex flex-column gap-2">
+          <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
+          <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info" (click)="showMessageDetail = true; msg(message)"></button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<app-message-form title="Editar Mensagem" [displayModal]="showMessageDetail" [errors]="errors"
+  (modalDisplay)="displayModal($event)" (submitMethod)="updateMessage($event)" [message]="message"></app-message-form>
