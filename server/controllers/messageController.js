@@ -1,11 +1,23 @@
 import Message from "../models/Message.js";
 import User from "../models/User.js";
 import { body, validationResult } from "express-validator"; 
+import jwt from "jsonwebtoken";
 
 export const recentMessages = async(req, res) => {
   try {
     let token = req.header("Authorization");
-    let projection = token ? 'title text user createdAt updatedAt' : '-user';
+    if (token && token.startsWith("Bearer ")) {
+      token = token.slice(7, token.length).trimLeft();
+    }
+    jwt.verify(token, process.env.JWT_SECRET, (err, verified) => {
+        if(err) {
+            req.user = undefined;        
+        }
+        else {
+            req.user = verified;
+        }
+    });
+    let projection = req.user !== undefined ? 'title text user createdAt updatedAt' : '-user';
     const messages = await
     Message.find({}, projection)
     .sort({ updatedAt: -1, createdAt: -1 })
