@@ -33,7 +33,9 @@ import {MessageModule} from 'primeng/message';
     InputTextModule,
     PrimeMessagesModule,
     MessageModule,
-    
+  ],
+  exports: [
+    MessageFormComponent
   ]
 })
 export class MessagesModule { }  
