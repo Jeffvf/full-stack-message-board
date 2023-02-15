@@ -56,7 +56,7 @@ export const userCreatePost = [
       passwordHash = await bcrypt.hash(req.body.password, salt);
       userExists = await User.findOne({ username: req.body.username })
     } catch(err) {
-      res.status(400).json({ errors: err.message });
+      return res.status(400).json({ errors: err.message });
     }
 
     const user = new User({
@@ -67,16 +67,16 @@ export const userCreatePost = [
     });
 
     if(!errors.isEmpty()){
-      res.status(400).json({ errors: errors.array(), user});
+      return res.status(400).json({ errors: errors.array(), user});
     }
     if(userExists !== null){
-      res.status(400).json({ errors: 'Nome de usuário já utilizado', user });
+      return res.status(400).json({ errors: 'Nome de usuário já utilizado', user });
     }
     user.save((err) => {
       if(err){
-        res.status(400).json({ errors: err.message, user });
+        return res.status(400).json({ errors: err.message, user });
       }
-      res.redirect(user.url);
+      res.sendStatus(200)
     })
   }
 ];
@@ -85,7 +85,7 @@ export const userUpdateGet = async(req, res) => {
   try {
     const user = await User.findById(req.params.id, "-password");
     if(!user){
-      res.status(404).json({ errors: 'Usuário não encontrado' });
+      return res.status(404).json({ errors: 'Usuário não encontrado' });
     }
     res.status(200).json({ user: user });
   } catch(err) {
@@ -130,19 +130,19 @@ export const userUpdatePost = [
         userExists = await User.findOne({ username: req.body.username })
         user['password'] = passwordHash 
       } catch(err) {
-        res.status(400).json({ errors: err.message });
+        return res.status(400).json({ errors: err.message });
       }
     }
     if(!errors.isEmpty()){
-      res.status(400).json({ errors: errors.array(), user });
+      return res.status(400).json({ errors: errors.array(), user });
     }
     const userId = JSON.stringify(user._id)
     if(userExists !== null && JSON.stringify(userExists._id) !== userId){
-      res.status(400).json({ errors: 'Nome de usuário já utilizado', user });
+      return res.status(400).json({ errors: 'Nome de usuário já utilizado', user });
     }
     User.findByIdAndUpdate(req.params.id, user, {}, (err, doc) => {
       if(err){
-        res.status(400).json({ errors: err })
+        return res.status(400).json({ errors: err })
       }
       res.status(200).json(user)
     });
@@ -152,10 +152,10 @@ export const userUpdatePost = [
 export const userLogin = async(req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    if(user === null ) res.status(400).json({ errors: 'Nome de usuário incorreto'});
+    if(user === null ) return res.status(400).json({ errors: 'Nome de usuário incorreto'});
 
     const isMatch = await bcrypt.compare(req.body.password, user.password);
-    if(!isMatch) res.status(400).json({ errors: 'Senha incorreta'});
+    if(!isMatch) return res.status(400).json({ errors: 'Senha incorreta'});
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.status(200).json({ token, user });
@@ -174,19 +174,19 @@ export const userDeletePost = [
   async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-      res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
     try{
       const user = await User.findById(req.params.id, 'password');
       if(!user){
-        res.status(404).json({ errors: 'Usuário não encontrado' });
+        return res.status(404).json({ errors: 'Usuário não encontrado' });
       }
       const isMatch = await bcrypt.compare(req.body.password, user.password);
-      if(!isMatch) res.status(400).json({ errors: 'Senha incorreta'});
+      if(!isMatch) return res.status(400).json({ errors: 'Senha incorreta'});
 
       await Message.deleteMany({ user: req.params.id });
       await User.findByIdAndDelete(req.params.id);
-      res.status(200).redirect('/')
+      res.sendStatus(200)
     } catch(err) {
       res.status(400).json({ errors: err.message });
     }

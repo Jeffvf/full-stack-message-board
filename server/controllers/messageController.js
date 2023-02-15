@@ -55,7 +55,7 @@ export const messageCreatePost = [
     const errors = validationResult(req);
     const user = await User.findById(req.user.id);
     if(!user){
-      res.status(400).json({ errors: 'Usuário inválido' });
+      return res.status(400).json({ errors: 'Usuário inválido' });
     }
     const message = new Message({
       title: req.body.title,
@@ -64,13 +64,13 @@ export const messageCreatePost = [
     });
 
     if(!errors.isEmpty()){
-      res.status(400).json({ errors: errors.array(), message: message });
+      return res.status(400).json({ errors: errors.array(), message: message });
     }
     message.save((err) => {
       if(err){
-        res.status(400).json({ errors: err});
+        return res.status(400).json({ errors: err});
       }
-      res.status(200).redirect(message.url);
+      res.sendStatus(200);
     });
   }
 ]
@@ -92,7 +92,7 @@ export const messageUpdatePost = [
     const errors = validationResult(req);
     const user = await User.findById(req.user.id);
     if(!user){
-      res.status(400).json({ errors: 'Usuário inválido' });
+      return res.status(400).json({ errors: 'Usuário inválido' });
     }
     const message = new Message({
       title: req.body.title,
@@ -102,11 +102,11 @@ export const messageUpdatePost = [
     });
 
     if(!errors.isEmpty()){
-      res.status(400).json({ errors: errors.array(), message: message });
+      return res.status(400).json({ errors: errors.array(), message: message });
     }
     try{
       await Message.findByIdAndUpdate(req.params.id, message);
-      res.status(200).redirect(message.url);
+      res.sendStatus(200);
     } catch(err){
       res.status(400).json({ errors: err.message });
     }
@@ -116,7 +116,7 @@ export const messageUpdatePost = [
 export const messageDeletePost = async(req, res) => {
   try {
     await Message.findByIdAndDelete(req.params.id)
-    res.status(200).redirect('/');
+    res.sendStatus(200);
   } catch (err) {
     res.status(400).json({ errors: err.message });
   }
