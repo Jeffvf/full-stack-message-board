@@ -2,17 +2,19 @@
   [draggable]="false" [resizable]="false" (onHide)="hideModal(false)">
   <form [formGroup]="messageForm" (ngSubmit)="submitMethod()">
     <label for="title" class="block text-900 font-medium mb-2">Título</label>
-    <input id="title" type="text" class="w-full mb-3 w-7" maxlength="40" pInputText value={{message?.title}} formControlName="title">
+    <input id="title" type="text" class="w-full mb-3 w-7" maxlength="40" placeholder="Título"
+      pInputText value={{message?.title}} formControlName="title">
     <div *ngIf="title!.invalid && (title!.touched || title!.dirty)" class="mb-3">
       <p-message *ngIf="title!.errors?.['required']" severity="error" text="Preencha o campo título"></p-message>
     </div>
     <label for="message" class="block text-900 font-medium mb-2">Mensagem</label>
-    <textarea id="message" rows="5" cols="40" maxlength="300" [autoResize]="true" pInputTextarea value={{message?.text}} formControlName="text"></textarea>
+    <textarea id="message" rows="5" cols="40" maxlength="300" [autoResize]="true" placeholder="Mensagem"
+      pInputTextarea value={{message?.text}} formControlName="text"></textarea>
     <div *ngIf="text!.invalid && (text!.touched || text!.dirty)" class="mb-3">
       <p-message *ngIf="text!.errors?.['required']" severity="error" text="Preencha o campo mensagem"></p-message>
     </div>
     <div class="flex gap-2 mt-2">
-      <button pButton pRipple type="submit" label="Salvar" icon="pi pi-check" class="p-button-outlined"></button>
+      <button pButton pRipple type="submit" label="Salvar" icon="pi pi-check" class="p-button-outlined" [disabled]="!messageForm.valid"></button>
       <button pButton pRipple type="button" label="Cancelar" icon="pi pi-times"
         class="p-button-outlined p-button-danger" (click)="hideModal(false)"></button>
     </div>
