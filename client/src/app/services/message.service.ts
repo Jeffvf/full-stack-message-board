@@ -11,7 +11,7 @@ export class MessageService {
   private baseMessageUrl = "http://localhost:8000";
   private messageUrl = "http://localhost:8000/message";
 
-  token = this.tokenStorageService.getToken() 
+  token = this.tokenStorageService.getToken()
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${this.token}`
@@ -23,7 +23,7 @@ export class MessageService {
   ) { }
 
   getMessages(): Observable<Message[]> {
-    return this.http.get<Message[]>(this.baseMessageUrl)
+    return this.http.get<Message[]>(this.baseMessageUrl, { headers: this.headers })
   }
 
   addMessage(message: MessageRegister){
