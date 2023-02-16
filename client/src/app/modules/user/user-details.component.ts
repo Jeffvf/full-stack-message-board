@@ -5,11 +5,13 @@ import { Message, MessageRegister } from "src/app/models/message";
 import { UserDetail } from "src/app/models/user";
 import { UserService } from "src/app/services/user.service";
 import { ServerError } from "src/app/models/error";
+import { ConfirmationService } from "primeng/api";
 
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.css']
+  styleUrls: ['./user-details.component.css'],
+  providers: [ConfirmationService]
 })
 
 export class UserDetailsComponent implements OnInit{
@@ -24,6 +26,7 @@ export class UserDetailsComponent implements OnInit{
     private userService: UserService,
     private router: Router,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +49,17 @@ export class UserDetailsComponent implements OnInit{
 
   displayModal(display: boolean){
     this.showMessageDetail = display;
+  }
+
+  confirm(message: Message){
+    this.confirmationService.confirm({
+      message: 'Deseja deletar essa mensagem?',
+      header: 'Deletar Mensagem',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        console.log(message)
+      },
+    });
   }
 
   updateMessage(message: MessageRegister){
