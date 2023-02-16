@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, pipe } from 'rxjs';
 import { Message, MessageRegister } from '../models/message';
 import { TokenStorageService } from './token-storage.service';
 
@@ -26,7 +26,7 @@ export class MessageService {
     return this.http.get<Message[]>(this.baseMessageUrl, { headers: this.headers })
   }
 
-  addMessage(message: MessageRegister){
+  addMessage(message: MessageRegister) {
     return this.http.post<MessageRegister>(`${this.messageUrl}/create`, message, { headers: this.headers })
       .pipe(
         catchError(err => of({
@@ -37,8 +37,18 @@ export class MessageService {
       )
   }
 
-  updateMessage(message: MessageRegister, id: string){
+  updateMessage(message: MessageRegister, id: string) {
     return this.http.post<MessageRegister>(`${this.messageUrl}/${id}/update`, message, { headers: this.headers })
+      .pipe(
+        catchError(err => of({
+          errors: err.error.errors,
+          message: message
+        }))
+      )
+  }
+
+  deleteMessage(message: Message) {
+    return this.http.post<any>(`${this.messageUrl}/${message._id}/delete`, message, { headers: this.headers })
       .pipe(
         catchError(err => of({
           errors: err.error.errors,

@@ -51,13 +51,20 @@ export class UserDetailsComponent implements OnInit{
     this.showMessageDetail = display;
   }
 
-  confirm(message: Message){
+  delete(message: Message){
     this.confirmationService.confirm({
       message: 'Deseja deletar essa mensagem?',
       header: 'Deletar Mensagem',
       icon: 'pi pi-info-circle',
       accept: () => {
-        console.log(message)
+        this.messageService.deleteMessage(message).subscribe(msg => {
+          if(msg.errors){
+            this.errors = msg.errors;
+          }
+          else{
+            window.location.reload();
+          }
+        })
       },
     });
   }
