@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit {
     }
     this.userService.login(user)
       .subscribe(userAuth => {
-        console.log(userAuth);
         if(userAuth.errors){
           this.errors = userAuth.errors;
         }
