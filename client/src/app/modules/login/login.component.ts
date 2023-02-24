@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthUser, UserCredentials } from 'src/app/models/user';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
@@ -25,7 +24,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private tokenStorage: TokenStorageService,
-    private router: Router,
     private primengConfig: PrimeNGConfig
   ) { }
 
@@ -51,7 +49,7 @@ export class LoginComponent implements OnInit {
         else{
           this.saveUserAuth(userAuth)
           this.errors = ''
-          this.redirect();
+          this.reload();
         }
       });
   }
@@ -61,7 +59,7 @@ export class LoginComponent implements OnInit {
     this.tokenStorage.saveUser(user.user)
   }
 
-  redirect() {
-    this.router.navigate([''])
+  reload() {
+    window.location.reload();
   }
 }
